@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Tools from '@/services/Tools.js';
 
 let toornamentToken         = null;
 let toornamentTokenValidity = null;
@@ -83,8 +84,15 @@ export default {
         const listMatches = await getTournamentMatches(tournamentId, apiKey);
         
         // call stages & groups information
-        const listStages = await getTournamentStages(tournamentId, apiKey);
-        const listGroups = await getTournamentGroups(tournamentId, apiKey);
+        const tempStages = await getTournamentStages(tournamentId, apiKey);
+        const tempGroups = await getTournamentGroups(tournamentId, apiKey);
+
+        // indexby
+        const listStages = Tools.indexBy(tempStages, 'id');
+        const listGroups = Tools.indexBy(tempGroups, 'id');
+
+        console.log(listStages);
+        console.log(listGroups);
         
         return listMatches;
     }
