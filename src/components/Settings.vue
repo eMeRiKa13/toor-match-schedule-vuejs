@@ -14,7 +14,7 @@
                 
             <div class="min-w-full divide-y divide-gray-200">
 
-                <div class="p-4">
+                <form class="p-4" @submit.prevent="onSubmit">
                     <div>
                         <label for="api_key" class="block text-sm font-medium text-gray-700">API Key</label>
                         <div class="mt-1">
@@ -53,7 +53,7 @@
                             Import Matches
                         </button>
                     </div>
-                </div>
+                </form>
                 
             </div>
 

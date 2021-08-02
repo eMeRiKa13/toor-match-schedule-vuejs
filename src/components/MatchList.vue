@@ -13,37 +13,34 @@
                 <thead class="bg-gray-50">
                     <tr>
                     <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Information
+                        Match
                     </th>
                     <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Date
-                    </th>
-                    <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Hour
-                    </th>
-                    <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Scheduled date & hour
                     </th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    <tr v-for="match in matches" :key="match.id">
-                    <td class="w-2/5 p-4">
-                        <div class="text-sm text-gray-500">Stage {{ match.stage_id }} / Group {{ match.group_id }} / Round {{ match.round_id }}</div>
-                        <div class="text-sm font-semibold text-gray-900">{{ match.opponents[0].participant.name }} vs {{ match.opponents[1].participant.name }}</div>
-                    </td>
-                    <td class="p-4 text-sm text-gray-900">
-                        <div class="mt-1 border-b border-gray-300 focus-within:border-green-600">
-                            <input type="date" name="date" id="date" class="block w-full border-0 border-b border-transparent bg-gray-50 focus:border-green-600 focus:ring-0 sm:text-sm" placeholder="Jane Doe" />
-                        </div>
-                    </td>
-                    <td class="p-4 text-sm text-gray-900">
-                        <div class="mt-1 border-b border-gray-300 focus-within:border-green-600">
-                            <input type="time" name="hour" id="hour" class="block w-full border-0 border-b border-transparent bg-gray-50 focus:border-green-600 focus:ring-0 sm:text-sm" placeholder="Jane Doe" />
-                        </div>
-                    </td>
-                    <td class="p-4 text-right text-sm font-medium">
-                        <a href="#" class="inline-block px-6 py-2 rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none">Edit</a>
-                    </td>
+                    <tr v-for="match in matches" :key="match.id">        
+                        <td class="w-2/4 p-4">
+                            <div class="text-sm text-gray-500">Stage {{ match.stage_id }} / Group {{ match.group_id }} / Round {{ match.round_id }}</div>
+                            <div class="text-sm font-semibold text-gray-900">{{ match.opponents[0].participant.name }} vs {{ match.opponents[1].participant.name }}</div>
+                        </td>
+                        <td class="p-4 text-sm text-gray-900">                            
+                            <form @submit.prevent="onSubmit">
+                                <div class="w-2/5 float-left mt-1 border-b border-gray-300 focus-within:border-green-600">
+                                    <input type="date" name="date" id="date" class="block w-full border-0 border-b border-transparent bg-gray-50 focus:border-green-600 focus:ring-0 sm:text-sm" placeholder="Jane Doe" />
+                                </div>
+                                
+                                <div class="w-1/5 float-left mt-1 ml-4 border-b border-gray-300 focus-within:border-green-600">
+                                    <input type="time" name="hour" id="hour" class="block w-full border-0 border-b border-transparent bg-gray-50 focus:border-green-600 focus:ring-0 sm:text-sm" placeholder="Jane Doe" />
+                                </div>
+                                
+                                <div class="w-1/5 float-left ml-4 mt-1 text-right text-sm font-medium">
+                                    <a href="#" class="inline-block px-6 py-2 rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none">Edit</a>
+                                </div>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
                 </table>
