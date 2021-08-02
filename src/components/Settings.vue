@@ -18,25 +18,25 @@
                     <div>
                         <label for="api_key" class="block text-sm font-medium text-gray-700">API Key</label>
                         <div class="mt-1">
-                        <input type="text" name="api_key" id="api_key" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                        <input type="text" v-model="apiKey" id="api_key" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                         </div>
                     </div>
                     <div class="mt-4">
                         <label for="api_client_id" class="block text-sm font-medium text-gray-700">API Client ID</label>
                         <div class="mt-1">
-                        <input type="text" name="api_client_id" id="api_client_id" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                        <input type="text" v-model="clientId" id="api_client_id" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                         </div>
                     </div>
                     <div class="mt-4">
                         <label for="api_client_secret" class="block text-sm font-medium text-gray-700">API Client Secret</label>
                         <div class="mt-1">
-                        <input type="text" name="api_client_secret" id="api_client_secret" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                        <input type="text" v-model="clientSecret" id="api_client_secret" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                         </div>
                     </div>
                     <div class="mt-4">
-                        <label for="toornament_id" class="block text-sm font-medium text-gray-700">Toornament ID</label>
+                        <label for="tournament_id" class="block text-sm font-medium text-gray-700">ID of your tournament</label>
                         <div class="mt-1">
-                        <input type="text" name="toornament_id" id="toornament_id" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                        <input type="text" v-model="tournamentId" id="tournament_id" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                         </div>                        
                         <p class="mt-1 text-xs break-words text-gray-500">
                             Copy your tournament ID, example for https://organizer.toornament.com/tournaments/441680454962233344/matches/ the tournament id is 441680454962233344
@@ -45,7 +45,7 @@
                     <div class="mt-4">
                         <label for="timezone" class="block text-sm font-medium text-gray-700">Timezone</label>
                         <div class="mt-1">
-                        <input type="text" name="Timezone" id="Timezone" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                        <input type="text" v-model.number="timezone" id="timezone" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                         </div>  
                     </div>
                     <div class="my-6 text-center">
@@ -63,10 +63,37 @@
 </template>
 
 <script>
+
 export default {
-  setup() {
+  name: 'Settings',
+  data() {
     return {
+        apiKey: null,
+        clientId: null,
+        clientSecret: null,
+        tournamentId: null,
+        timezone: 'Europe/Paris'  
     };
+  },
+  components: {
+  },
+  methods: {
+    onSubmit() {
+      if (this.apiKey === '' || this.clientId === '' || this.clientSecret === '' || this.clientSecret === '' || this.timezone === '') {
+        alert('Please fill out every configuration field.')
+        return;
+      }
+
+      const settingsData = {
+        apiKey: this.apiKey,
+        clientId: this.clientId,
+        clientSecret: this.clientSecret,
+        tournamentId: this.tournamentId,
+        timezone: this.timezone
+      }
+
+      this.$emit('settings-submitted', settingsData);
+    }
   },
 };
 </script>

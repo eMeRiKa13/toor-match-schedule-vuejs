@@ -23,8 +23,13 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     <tr v-for="match in matches" :key="match.id">        
                         <td class="w-2/4 p-4">
-                            <div class="text-sm text-gray-500">Stage {{ match.stage_id }} / Group {{ match.group_id }} / Round {{ match.round_id }}</div>
-                            <div class="text-sm font-semibold text-gray-900">{{ match.opponents[0].participant.name }} vs {{ match.opponents[1].participant.name }}</div>
+                            <div class="text-sm text-gray-500">Stage {{ match.stage_id }} / Group {{ match.group_id }}</div>
+                            <div 
+                            v-if="match.opponents[0].participant !== null"
+                            class="text-sm font-semibold text-gray-900">{{ match.opponents[0].participant.name }} vs {{ match.opponents[1].participant.name }}</div>
+                            <div 
+                            v-else
+                            class="text-sm font-semibold text-gray-900">Participants to be determined</div>
                         </td>
                         <td class="p-4 text-sm text-gray-900">                            
                             <form @submit.prevent="onSubmit">
@@ -51,74 +56,13 @@
 </template>
 
 <script>
-const matches = [
-  {
-        "scheduled_datetime": "2020-12-31T00:00:00+00:00",
-        "id": "13",
-        "status": "pending",
-        "stage_id": "1",
-        "group_id": "2",
-        "round_id": "3",
-        "number": 1,
-        "type": "duel",
-        "opponents": [
-            {
-                "number": 1,
-                "position": 1,
-                "participant": {
-                    "id": "1",
-                    "name": "Team A"
-                }
-            },
-            {
-                "number": 2,
-                "position": 2,
-                "participant": {
-                    "id": "2",
-                    "name": "Team B"
-                }
-            }
-        ],
-        "report_status": "report",
-        "tournament_id": "378426939508809728"
-    },
-    {
-        "scheduled_datetime": "2020-12-31T08:00:00+00:00",
-        "id": "14",
-        "status": "pending",
-        "stage_id": "1",
-        "group_id": "2",
-        "round_id": "3",
-        "number": 2,
-        "type": "duel",
-        "opponents": [
-            {
-                "number": 1,
-                "position": 1,
-                "participant": {
-                    "id": "3",
-                    "name": "Team C"
-                }
-            },
-            {
-                "number": 2,
-                "position": 2,
-                "participant": {
-                    "id": "4",
-                    "name": "Team D"
-                }
-            }
-        ],
-        "report_status": "report",
-        "tournament_id": "378426939508809728"
-    },
-]
 export default {
   name: 'MatchList',
-  setup() {
-    return {
-      matches,
-    };
+  props: {
+    matches: {
+      type: Array,
+      required: true,
+    },
   },
 };
 </script>
