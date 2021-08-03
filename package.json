@@ -13,6 +13,7 @@
     "@tailwindcss/forms": "^0.3.3",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "moment-timezone": "^0.5.33",
     "vue": "^3.0.0",
     "vuex": "^4.0.0-0"
   },

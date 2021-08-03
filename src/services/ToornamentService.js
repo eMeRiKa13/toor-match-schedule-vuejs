@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Tools from '@/services/Tools.js';
+import moment from 'moment-timezone'
 
 let toornamentToken         = null;
 let toornamentTokenValidity = null;
@@ -72,7 +73,7 @@ async function getTournamentGroups(tournamentId, apiKey) {
 
 export default {
               
-    async findTournamentMatches(tournamentId, apiKey, clientId, clientSecret, page = 1) {
+    async findTournamentMatches(tournamentId, timezone, apiKey, clientId, clientSecret, page = 1) {
    
         if(toornamentToken == null || toornamentTokenValidity < Date.now()) {
             // Make a first request
@@ -81,19 +82,30 @@ export default {
         }
         
         // call Matches with token
-        const listMatches = await getTournamentMatches(tournamentId, apiKey);
+        let listMatches = await getTournamentMatches(tournamentId, apiKey);
         
         // call stages & groups information
         const tempStages = await getTournamentStages(tournamentId, apiKey);
-        const tempGroups = await getTournamentGroups(tournamentId, apiKey);
+        // const tempGroups = await getTournamentGroups(tournamentId, apiKey);
 
         // indexby
         const listStages = Tools.indexBy(tempStages, 'id');
-        const listGroups = Tools.indexBy(tempGroups, 'id');
+        // const listGroups = Tools.indexBy(tempGroups, 'id');
 
-        console.log(listStages);
-        console.log(listGroups);
-        
+        // Add stage name + proper date & time
+        listMatches.forEach(function(match){            
+            match.stage = listStages[match.stage_id];
+            delete match.stage_id;
+
+            if(match.scheduled_datetime !== null) {
+                
+                const dateTimezone   = moment.utc(match.scheduled_datetime).tz(timezone);
+                const date           = dateTimezone.format();
+                match.scheduled_date = date.slice(0, 10);
+                match.scheduled_time = date.slice(11, 16);
+            }
+        });
+
         return listMatches;
     }
 };

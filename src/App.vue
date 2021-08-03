@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     async importMatches(settingsData) {
-      this.matches = await ToornamentService.findTournamentMatches(settingsData.tournamentId, settingsData.apiKey, settingsData.clientId, settingsData.clientSecret);
+      this.matches = await ToornamentService.findTournamentMatches(settingsData.tournamentId, settingsData.timezone, settingsData.apiKey, settingsData.clientId, settingsData.clientSecret);
     }
   },
 }
