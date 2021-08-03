@@ -45,7 +45,16 @@
                     <div class="mt-4">
                         <label for="timezone" class="block text-sm font-medium text-gray-700">Timezone</label>
                         <div class="mt-1">
-                        <input type="text" v-model.number="timezone" id="timezone" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                            <select 
+                                v-model="timezone"
+                                id="timezone" 
+                                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            >
+                                <option disabled value="">Please select one</option>
+                                <option v-for="option in listTimezones" :value="option.tzCode" :key="option.tzCode">
+                                    {{ option.name }}
+                                </option>
+                            </select>
                         </div>  
                     </div>
                     <div class="my-4 text-center">
@@ -63,6 +72,7 @@
 </template>
 
 <script>
+import timezones from 'timezones-list';
 
 export default {
   name: 'Settings',
@@ -72,7 +82,8 @@ export default {
         clientId: null,
         clientSecret: null,
         tournamentId: null,
-        timezone: 'Europe/Paris'  
+        timezone: 'Europe/Paris',  
+        listTimezones: timezones
     };
   },
   methods: {
