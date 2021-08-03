@@ -42,13 +42,24 @@ export default {
       error: null,
     }
   },
+  inject: ['GStore'],
   methods: {
     async importMatches(settingsData) {
       this.matches      = await ToornamentService.findTournamentMatches(settingsData.tournamentId, settingsData.timezone, settingsData.apiKey, settingsData.clientId, settingsData.clientSecret);
       this.settingsData = settingsData;
+      
+      this.GStore.flashMessage = 'Your matches have been successfully imported';
+      setTimeout(() => {  // After 3 seconds remove it
+        this.GStore.flashMessage = ''
+      }, 5000);
     },
     async updateMatchDate(matchDateData) {
       await ToornamentService.updateMatchDate(matchDateData.matchId, matchDateData.scheduledDate, matchDateData.scheduledTime, this.settingsData.timezone, this.settingsData.apiKey, this.settingsData.clientId, this.settingsData.clientSecret);
+
+      this.GStore.flashMessage = 'This match is now scheduled';
+      setTimeout(() => {  // After 3 seconds remove it
+        this.GStore.flashMessage = ''
+      }, 5000);
     }
   },
 }

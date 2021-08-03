@@ -1,6 +1,9 @@
-import { createApp } from "vue";
+import { createApp, reactive } from "vue";
 import App from "./App.vue";
 import store from "./store";
 import './index.css'
 
-createApp(App).use(store).mount("#app");
+// Create a reactive object
+const GStore = reactive({ flashMessage: '' })
+
+createApp(App).use(store).provide('GStore', GStore).mount("#app");
