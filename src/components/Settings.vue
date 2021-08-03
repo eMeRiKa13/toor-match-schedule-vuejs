@@ -75,8 +75,6 @@ export default {
         timezone: 'Europe/Paris'  
     };
   },
-  components: {
-  },
   methods: {
     onSubmit() {
       if (this.apiKey === '' || this.clientId === '' || this.clientSecret === '' || this.clientSecret === '' || this.timezone === '') {

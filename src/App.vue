@@ -7,7 +7,7 @@
         
         <div class="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
           
-          <MatchList :matches="matches" />
+          <MatchList @match-date-submitted="updateMatchDate" :matches="matches" />
 
           <Settings @settings-submitted="importMatches" />
 
@@ -37,13 +37,18 @@ export default {
   data() {
     return {
       matches: [],
+      settingsData: null,
       loading: false,
       error: null,
     }
   },
   methods: {
     async importMatches(settingsData) {
-      this.matches = await ToornamentService.findTournamentMatches(settingsData.tournamentId, settingsData.timezone, settingsData.apiKey, settingsData.clientId, settingsData.clientSecret);
+      this.matches      = await ToornamentService.findTournamentMatches(settingsData.tournamentId, settingsData.timezone, settingsData.apiKey, settingsData.clientId, settingsData.clientSecret);
+      this.settingsData = settingsData;
+    },
+    async updateMatchDate(matchDateData) {
+      await ToornamentService.updateMatchDate(matchDateData.matchId, matchDateData.scheduledDate, matchDateData.scheduledTime, this.settingsData.timezone, this.settingsData.apiKey, this.settingsData.clientId, this.settingsData.clientSecret);
     }
   },
 }

@@ -32,7 +32,7 @@
                             class="text-sm font-semibold text-gray-500">Participants to be determined</div>
                         </td>
                         <td class="p-4 text-sm text-gray-900">                            
-                            <form @submit.prevent="onSubmit">
+                            <form @submit.prevent="onSubmit(match)">
                                 <div class="w-2/5 float-left mt-1 border-b border-gray-300 focus-within:border-green-600">
                                     <input type="date" v-model="match.scheduled_date" id="date" class="block w-full border-0 border-b border-transparent bg-gray-50 focus:border-green-600 focus:ring-0 sm:text-sm" />
                                 </div>
@@ -42,7 +42,9 @@
                                 </div>
                                 
                                 <div class="w-1/5 float-left ml-4 mt-1 text-right text-sm font-medium">
-                                    <a href="#" class="inline-block px-6 py-2 rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none">Edit</a>
+                                    <button type="submit" class="inline-block px-6 py-2 rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none">
+                                        Edit
+                                    </button>
                                 </div>
                             </form>
                         </td>
@@ -65,6 +67,22 @@ export default {
     },
   },
   computed: {
-  }
+  },
+  methods: {
+    onSubmit(match) {
+      if (match.scheduled_date === undefined || match.scheduled_time === undefined) {
+        alert('Please give a date and time')
+        return;
+      }
+
+      const matchDateData = {
+        matchId: match.id,
+        scheduledDate: match.scheduled_date,
+        scheduledTime: match.scheduled_time
+      }
+
+      this.$emit('match-date-submitted', matchDateData);
+    }
+  },
 };
 </script>

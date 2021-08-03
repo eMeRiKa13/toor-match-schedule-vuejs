@@ -71,6 +71,21 @@ async function getTournamentGroups(tournamentId, apiKey) {
       .then(response => response.data);
 }
 
+async function patchMatchDate(matchId, dateTimezone, apiKey) {
+    return axios({
+        method: 'patch',
+        url: 'https://api.toornament.com/organizer/v2/matches/'+matchId,
+        headers: {
+            'X-Api-Key': apiKey,
+            Authorization: toornamentToken,
+        },
+        data: {
+            scheduled_datetime: dateTimezone,
+        }
+      })
+      .then(response => response.data);
+}
+
 export default {
               
     async findTournamentMatches(tournamentId, timezone, apiKey, clientId, clientSecret, page = 1) {
@@ -107,5 +122,21 @@ export default {
         });
 
         return listMatches;
+    },
+              
+    async updateMatchDate(matchId, date, time, timezone, apiKey, clientId, clientSecret) {
+   
+        if(toornamentToken == null || toornamentTokenValidity < Date.now()) {
+            // Make a first request
+            toornamentToken         = await getToken(clientId, clientSecret);   
+            toornamentTokenValidity = Date.now() + 86000; //token is valid 24 hours = 86400. I removed some seconds for the time of this call
+        }
+        
+        const dateTimezone   = moment.tz(date+' '+time, timezone);
+        
+        // patch Match date
+        const match = await patchMatchDate(matchId, dateTimezone.format(), apiKey);
+
+        return match;
     }
 };
