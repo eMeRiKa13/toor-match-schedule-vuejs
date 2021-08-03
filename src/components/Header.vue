@@ -1,6 +1,6 @@
 <template>
   <header class="bg-gray-900">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative" aria-label="Top">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Top">
       <div class="w-full py-6 flex items-center justify-between border-b border-black lg:border-none">
         <div class="flex items-center">
           <a href="#">
@@ -12,18 +12,16 @@
           </div>
         </div>
       </div>
-
-      <div 
-      id="flashMessage"
-      v-if="GStore.flashMessage" 
-      class="absolute right-8 top-4 max-w-sm w-full bg-white shadow-lg rounded-lg ring-1 ring-black ring-opacity-5 p-4"
-      >
-        <h3 class="text-sm leading-6 font-normal text-gray-900">{{ GStore.flashMessage }}</h3>
-      </div>
-
     </nav>
-    
   </header>
+
+    <div 
+    id="flashMessage" 
+    v-if="GStore.flashMessage" 
+    class="absolute left-1/2 right-1/2 top-4 max-w-sm w-full bg-white shadow-lg rounded-lg ring-1 ring-black ring-opacity-5"
+    >
+      <h3 class="text-sm p-4 leading-6 font-normal text-gray-900">{{ GStore.flashMessage }}</h3>
+    </div>
   
 </template>
 
