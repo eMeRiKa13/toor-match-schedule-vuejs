@@ -52,17 +52,27 @@
                 </tbody>
                 </table>
 
+                <Pagination />
             </div>
         </section>
     </div>
 </template>
 
 <script>
+import Pagination from '@/components/Pagination.vue';
+
 export default {
   name: 'MatchList',
+  components: {
+    Pagination,
+  },  
   props: {
     matches: {
       type: Array,
+      required: true,
+    },
+    pagination: {
+      type: Object,
       required: true,
     },
   },

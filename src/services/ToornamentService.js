@@ -36,7 +36,7 @@ async function getTournamentMatches(tournamentId, apiKey, page = 1) {
             tournament_ids: tournamentId,
         }
       })
-      .then(response => response.data);
+      .then(response => response);
 }
 
 async function getTournamentStages(tournamentId, apiKey) {
@@ -52,7 +52,7 @@ async function getTournamentStages(tournamentId, apiKey) {
             tournament_ids: tournamentId,
         }
       })
-      .then(response => response.data);
+      .then(response => response);
 }
 
 async function getTournamentGroups(tournamentId, apiKey) {
@@ -68,7 +68,7 @@ async function getTournamentGroups(tournamentId, apiKey) {
             tournament_ids: tournamentId,
         }
       })
-      .then(response => response.data);
+      .then(response => response);
 }
 
 async function patchMatchDate(matchId, dateTimezone, apiKey) {
@@ -83,7 +83,7 @@ async function patchMatchDate(matchId, dateTimezone, apiKey) {
             scheduled_datetime: dateTimezone,
         }
       })
-      .then(response => response.data);
+      .then(response => response);
 }
 
 export default {
@@ -97,10 +97,12 @@ export default {
         }
         
         // call Matches with token
-        let listMatches = await getTournamentMatches(tournamentId, apiKey);
+        let response     = await getTournamentMatches(tournamentId, apiKey);
+        let listMatches = response.data;
         
         // call stages & groups information
-        const tempStages = await getTournamentStages(tournamentId, apiKey);
+        response      = await getTournamentStages(tournamentId, apiKey);
+        const tempStages = response.data;
         // const tempGroups = await getTournamentGroups(tournamentId, apiKey);
 
         // indexby
@@ -135,7 +137,8 @@ export default {
         const dateTimezone   = moment.tz(date+' '+time, timezone);
         
         // patch Match date
-        const match = await patchMatchDate(matchId, dateTimezone.format(), apiKey);
+        let response = await patchMatchDate(matchId, dateTimezone.format(), apiKey);
+        const match  = response.data;
 
         return match;
     }

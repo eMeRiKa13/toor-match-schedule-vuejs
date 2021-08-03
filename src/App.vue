@@ -7,7 +7,7 @@
         
         <div class="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
           
-          <MatchList @match-date-submitted="updateMatchDate" :matches="matches" />
+          <MatchList @match-date-submitted="updateMatchDate" :matches="matches" :pagination="pagination" />
 
           <Settings @settings-submitted="importMatches" />
 
@@ -38,7 +38,11 @@ export default {
     return {
       matches: [],
       settingsData: null,
-      loading: false,
+      pagination: {
+        page: 1,
+        perPage: 50,
+        nbItems: 0,
+      },
       error: null,
     }
   },
@@ -47,6 +51,7 @@ export default {
     async importMatches(settingsData) {
       this.matches      = await ToornamentService.findTournamentMatches(settingsData.tournamentId, settingsData.timezone, settingsData.apiKey, settingsData.clientId, settingsData.clientSecret);
       this.settingsData = settingsData;
+      this.pagination.nbItems = this.matches.length;
       
       this.GStore.flashMessage = 'Your matches have been successfully imported';
       setTimeout(() => {  // After 3 seconds remove it
