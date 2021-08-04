@@ -97,8 +97,12 @@ export default {
         }
         
         // call Matches with token
-        let response     = await getTournamentMatches(tournamentId, apiKey);
-        let listMatches = response.data;
+        let response        = await getTournamentMatches(tournamentId, apiKey);
+        let listMatches     = response.data;
+        let headers         = response.headers;
+        let contentRange    = response.headers['content-range'];
+
+        console.log(response.headers);
         
         // call stages & groups information
         response      = await getTournamentStages(tournamentId, apiKey);
