@@ -101,8 +101,6 @@ export default {
         let listMatches     = response.data;
         let headers         = response.headers;
         let contentRange    = response.headers['content-range'];
-
-        console.log(response.headers);
         
         // call stages & groups information
         response      = await getTournamentStages(tournamentId, apiKey);

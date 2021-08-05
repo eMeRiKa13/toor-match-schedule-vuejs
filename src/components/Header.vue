@@ -18,7 +18,7 @@
     <div 
     id="flashMessage" 
     v-if="GStore.flashMessage" 
-    class="absolute left-1/2 right-1/2 top-4 max-w-sm w-full bg-white shadow-lg rounded-lg ring-1 ring-black ring-opacity-5"
+    class="fixed right-1/2 top-4 max-w-sm w-full bg-white shadow-lg rounded-lg ring-1 ring-black ring-opacity-5"
     >
       <h3 class="text-sm p-4 leading-6 font-normal text-gray-900">{{ GStore.flashMessage }}</h3>
     </div>
@@ -36,17 +36,19 @@ export default {
 </script>
 
 <style scoped>
-@keyframes whitefade {
+@keyframes slideout {
   from {
-    background: white;
   }
   to {
-    background: transparent;
+    top: -200px;
   }
 }
 
 #flashMessage {
-  animation-name: whitefade;
-  animation-duration: 5s;
+  animation-name: slideout;
+  animation-duration: 4s;
+  transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
 </style>
