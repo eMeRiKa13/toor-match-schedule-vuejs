@@ -21,7 +21,7 @@
       <a href="#" class="relative inline-flex items-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
         Previous
       </a>
-      <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+      <a href="#" class="ml-3 relative inline-flex items-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
         Next
       </a>
     </div>
